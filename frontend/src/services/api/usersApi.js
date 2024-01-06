@@ -1,7 +1,6 @@
 import { apiSlice } from "./apiSlice";
 
 import { getAuthorizationToken } from '../../utils/helper'
-alert("hello")
 export const usersSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsersList: builder.query({
