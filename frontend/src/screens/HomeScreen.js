@@ -6,7 +6,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { useQuery } from "../hooks";
 import { useGetProductListQuery } from "../services/api/productsApi";
-import { productList } from "../acions/productActions";
+// import { productList } from "../acions/productActions";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -16,6 +16,7 @@ const HomeScreen = () => {
   if (!products) {
     error = "No Product Found";
   }
+  console.log("products:::",products,error);
   // console.log("productName", productName)
   //    let { isLoading: loadingSearch, isError: errorSearch, data: productsSearch } = useGetProductByNameQuery(productName);
 
@@ -23,9 +24,9 @@ const HomeScreen = () => {
   //   products = productsSearch;
   // }
 
-  if(!loading) {
-    dispatch(productList())
-  }
+  // if(!loading) {
+  //   dispatch(productList())
+  // }
   return (
     <>
       <h1>Latest Products</h1>

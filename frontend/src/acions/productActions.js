@@ -13,10 +13,10 @@ import {
   PRODUCT_DELETE_FAIL,
 } from "../constants/productConstants";
 import axios from "axios";
-import {  productListSuccess } from "../slices/productSlices";
-export const productList = (product) => async (dispatch) => {
-    dispatch(productListSuccess(product));
-};
+// import {  productListSuccess } from "../slices/productSlices";
+// export const productList = (product) => async (dispatch) => {
+//     dispatch(productListSuccess(product));
+// };
 
 export const productDeatils = (id) => async (dispatch) => {
   try {

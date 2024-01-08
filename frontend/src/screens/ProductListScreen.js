@@ -40,7 +40,7 @@ const ProductListScreen = ({ history }) => {
     if (success) {
       history.push(`/admin/product/${createdProduct._id}/edit`);
     } else {
-      dispatch(productList());
+      // dispatch(productList());
     }
     if (successDeleted) {
       swal("Success!", "You have deleted the product!", "success");

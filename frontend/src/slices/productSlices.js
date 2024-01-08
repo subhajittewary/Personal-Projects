@@ -9,10 +9,10 @@ export const productSlice = createSlice({
             state.productList.loading=true;
             state.productList.products=[];
         },
-        productListSuccess:(state,action)=>{
-            state.productList.loading= false;
-            state.productList.products= action.payload; 
-        },
+        // productListSuccess:(state,action)=>{
+        //     state.productList.loading= false;
+        //     state.productList.products= action.payload; 
+        // },
         productListFail:(state,action)=>{
             state.productList.loading= false;
             state.productList.error= action.payload; 
@@ -21,6 +21,6 @@ export const productSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { productListReq,productListSuccess,productListFail } = productSlice.actions;
+export const { productListReq,productListFail } = productSlice.actions;
 
 export default productSlice.reducer;
