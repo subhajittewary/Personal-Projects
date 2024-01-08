@@ -32,7 +32,7 @@ const Header = ({ history }) => {
       <Navbar bg="dark" variant="dark" expand="lg" collapseonselect="true">
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>ProShop V1</Navbar.Brand>
+            <Navbar.Brand>MyShop</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

@@ -13,10 +13,11 @@ import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
 const ProductEditScreen = ({ history, match }) => {
   const dispatch = useDispatch();
   const { loading, error, product } = useSelector((state) => {
+  console.log("state--->",state)
     return state.productDeatils;
   });
   const productUpdateDetails = useSelector((state) => state.productUpdate);
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector((state) => state.userSlice.userLogin);
   const { userInfo } = userLogin;
   const {
     loading: loadingUpdate,
@@ -79,6 +80,7 @@ const ProductEditScreen = ({ history, match }) => {
   };
 
   const submitHandler = (e) => {
+    console.log("product::",product)
     e.preventDefault();
     dispatch(
       productUpdate({
@@ -101,11 +103,11 @@ const ProductEditScreen = ({ history, match }) => {
       <FormContainer>
         <h1>Edit Product</h1>
         {loadingUpdate && <Loader />}
-        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
+        {errorUpdate && <Message variant="danger">{errorUpdate}+1</Message>}
         {loading ? (
           <Loader />
         ) : error ? (
-          <Message variant="danger">{error}</Message>
+          <Message variant="danger">{error}=2</Message>
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="name">

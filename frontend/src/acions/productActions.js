@@ -22,7 +22,7 @@ export const productDeatils = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/prodcts/${id}`);
+    const { data } = await axios.get(`/api/products/${id}`);
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
@@ -42,13 +42,13 @@ export const productDeatils = (id) => async (dispatch) => {
 export const productUpdate = (product) => async (dispatch, getState) => {
   try {
     dispatch({ type: PRODUCT_UPDATE_REQUEST });
-    const {
-      userLogin: { userInfo },
+     const {
+      userSlice: { userLogin },
     } = getState();
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLogin.userInfo.token}`,
       },
     };
 
