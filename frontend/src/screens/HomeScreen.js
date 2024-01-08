@@ -16,7 +16,6 @@ const HomeScreen = () => {
   if (!products) {
     error = "No Product Found";
   }
-  console.log("products:::",products,error);
   // console.log("productName", productName)
   //    let { isLoading: loadingSearch, isError: errorSearch, data: productsSearch } = useGetProductByNameQuery(productName);
 

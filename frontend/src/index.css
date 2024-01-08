@@ -20,6 +20,16 @@ h2 {
   margin: 0.1rem;
 }
 
+.rating {
+  text-wrap: nowrap;
+}
+
+.wrap-text{
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+}
+
 /* carousel */
 .carousel-item-next,
 .carousel-item-prev,
@@ -45,6 +55,11 @@ h2 {
 }
 .carousel a {
   margin: 0 auto;
+}
+
+.img-resize {
+  width: 221px;
+  height: 176px;
 }
 @media (max-width: 900px) {
   .carousel-caption h2 {

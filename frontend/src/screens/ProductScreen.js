@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Row,
@@ -14,14 +13,8 @@ import Rating from "../components/Rating";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { useGetProductDetailsByIdQuery } from "../services/api/productsApi";
-import { productDeatils } from "../acions/productActions";
 const ProductScreen = ({ history, match }) => {
-  const dispatch = useDispatch();
-  const { isLoading:loading, error, data:product } = useGetProductDetailsByIdQuery(match.params.id)
-console.log("product",product)
-  useEffect(() => {
-    dispatch(productDeatils(match.params.id));
-  }, [dispatch, match.params.id]);
+  const { isLoading: loading, error, data: product } = useGetProductDetailsByIdQuery(match.params.id);
   const [qty, setQty] = useState(1);
 
   const addToCartHandler = () => {

@@ -10,7 +10,7 @@ const Product = ({ product }) => {
         to={`/product/${product._id}`}
         style={{ cursor: "pointer" }}
       >
-        <Card.Img src={product.image?product.image:''} variant="top" />
+        <Card.Img src={product.image?product.image:''} variant="top" className="img-resize"/>
       </LinkContainer>
 
       <Card.Body>
@@ -18,7 +18,7 @@ const Product = ({ product }) => {
           to={`/product/${product._id}`}
           style={{ cursor: "pointer" }}
         >
-          <Card.Title as="div">
+          <Card.Title as="div" className="wrap-text">
             <strong>{product.name}</strong>
           </Card.Title>
         </LinkContainer>

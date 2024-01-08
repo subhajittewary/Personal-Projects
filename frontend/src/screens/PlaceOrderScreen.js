@@ -8,7 +8,7 @@ import { createOrder } from "../acions/orderActions";
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
+  let cart = useSelector((state) => state.cart);
   if (!cart.shippingAddress.address) {
     history.push("/shipping");
   } else if (!cart.paymentMethod) {
@@ -18,6 +18,8 @@ const PlaceOrderScreen = ({ history }) => {
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
+
+  cart = {...cart};
 
   cart.itemsPrice = addDecimals(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
