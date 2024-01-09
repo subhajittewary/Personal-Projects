@@ -68,7 +68,7 @@ const OrderScreen = ({ match }) => {
     }
 
     return loading ? <Loader /> : error ? <Message variant="danger"> {error} </Message> : <>
-        <h1>Order {order._id}</h1>
+        <h5>Order {order._id}</h5>
         <Row>
             <Col md={8}>
                 <ListGroup variant='flush'>

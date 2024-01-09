@@ -9,8 +9,11 @@ export const productSlice = apiSlice.injectEndpoints({
     }),
     getProductDetailsById: builder.query({
       query: (id) => `/products/${id}`
+    }),
+    getTopProducts: builder.query({
+      query: (id) => `/products/top`
     })
   })
 })
 
-export const { useGetProductListQuery, useGetProductDetailsByIdQuery } = productSlice
+export const { useGetProductListQuery, useGetProductDetailsByIdQuery, useGetTopProductsQuery } = productSlice

@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { useQuery } from "../hooks";
 import { useGetProductListQuery } from "../services/api/productsApi";
+import ProductsCarousal from "../components/ProductsCarousal";
 // import { productList } from "../acions/productActions";
 
 const HomeScreen = () => {
@@ -29,6 +30,7 @@ const HomeScreen = () => {
   return (
     <>
       <h1>Latest Products</h1>
+      <h1><ProductsCarousal/></h1>
       {loading ? (
         <h1>
           <Loader />
