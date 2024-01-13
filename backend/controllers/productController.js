@@ -132,7 +132,7 @@ export const uploadFile = (req, res) => {
 // @route   GET /api/products/top
 // @access  Public
 export const getTopProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+  const products = await Product.find({}).sort({ numReviews: -1 }).limit(3);
   if (products) {
     res.status(200).json(products);
   } else {
