@@ -110,8 +110,8 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
 
     const {
-      userLogin: { userInfo },
-    } = getState();
+      userSlice : { userLogin:{userInfo} },
+     } = getState();
     const config = {
       headers: {
         "Content-Type": "application/json",
