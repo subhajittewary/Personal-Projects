@@ -171,3 +171,24 @@ export const createProductReview = asyncHandler(async (req, res) => {
     res.status(404).json({ message: "Resource not found" });
   }
 });
+
+// @desc    Update review numbers.
+// @route   GET /api/products/reviews
+// @access  Private
+export const updateProductReviews = asyncHandler(async (req, res) => {
+  const products = await Product.find({});
+  if (products) {
+    products.forEach(async product =>{
+      product.numReviews = product.reviews.length;
+      const rating = product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length;
+      product.rating = rating?rating:0;
+      console.log("first")
+      await product.save();
+      // res.json(product)
+    })
+
+    res.status(201).send({ Message: "Number review updated ." })
+  } else {
+    res.status(404).send({ message: "Resource not found" });
+  }
+});

@@ -68,10 +68,10 @@ const ProductScreen = ({ history, match }) => {
                       <h3>{product.name}</h3>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <Rating
+                      <a href="#review">  <Rating
                         value={product.rating}
                         text={`${product.numReviews} reviews`}
-                      />
+                      /></a>
                     </ListGroup.Item>
                     <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
                     <ListGroup.Item>
@@ -140,7 +140,7 @@ const ProductScreen = ({ history, match }) => {
                   </Card>
                 </Col>
               </Row>
-              <Row className="review">
+              <Row className="review" id="review">
                 <Col md={6}>
                   <h2>Reviews</h2>
                   {product.reviews.length === 0 && <Message>No Reviews</Message>}
@@ -154,7 +154,9 @@ const ProductScreen = ({ history, match }) => {
                       </ListGroup.Item>
                     })}
                   </ListGroup>
-                  <ListGroup.Item>
+                </Col>
+                <Col>
+                <ListGroup.Item>
                     <h4>Leave a review if you liked the product.</h4>
                     {loadingProductReview && <Loader />}
                     {userInfo ? (

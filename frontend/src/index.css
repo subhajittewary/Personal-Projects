@@ -58,8 +58,9 @@ h2 {
   margin-left: auto;
   margin-right: auto;
 } */
-.carousel a {
-  /* margin: 0 auto; */
+
+a:hover{
+  text-decoration: none;
 }
 
 .img-resize {
