@@ -6,7 +6,9 @@ import {
   updateProductById,
   createProduct,
   deleteProduct,
-  getTopProducts
+  getTopProducts,
+  createProductReview,
+  
 } from "../controllers/productController.js";
 import { isAdmin, protect } from "../middlewares/authMiddleware.js";
 
@@ -22,6 +24,8 @@ router
   .get(getProductById)
   .put(protect, isAdmin, updateProductById)
   .delete(protect, isAdmin, deleteProduct);
+
+router.route("/:id/reviews").post(protect, createProductReview);
 
 router.route("/search/:productName").get(getProductBySearchItem);
 

@@ -76,7 +76,6 @@ export const updateProductById = asyncHandler(async (req, res) => {
 // @route   POST /api/products/add
 // @access  Private/Admin
 export const createProduct = asyncHandler(async (req, res) => {
-  console.log(req.user);
   const product = new Product({
     user: req.user._id,
     name: "Sample Product",
@@ -122,7 +121,6 @@ export const uploadFile = (req, res) => {
   upload(req, res, function (err) {
     //if error
     //any error operations
-    console.log("first");
     //if success
     // Everything went fine.
   });
@@ -134,11 +132,42 @@ export const uploadFile = (req, res) => {
 // @route   GET /api/products/top
 // @access  Public
 export const getTopProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({}).sort({rating:-1}).limit(3);
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
   if (products) {
     res.status(200).json(products);
   } else {
     res.status(404);
     throw new Error("Products not found");
+  }
+});
+
+
+// @desc    Create a review
+// @route   POST /api/products/:id/reviews
+// @access  Private
+export const createProductReview = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const { rating, comment } = req.body;
+  const product = await Product.findById(id);
+  if (product) {
+    const alreadyReviewed = product.reviews.find((review) => review.user.toString() === req.user._id.toString())
+
+    if (alreadyReviewed) {
+      res.status(400);
+      throw new Error("Product is already reviewed.")
+    }
+    const review = {
+      user: req.user._id,
+      name: req.user.name,
+      comment,
+      rating: Number(rating)
+    }
+    product.reviews.push(review);
+    product.numReviews = product.reviews.length;
+    product.rating = product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length;
+    await product.save();
+    res.status(201).json({ Message: "Review has been added." })
+  } else {
+    res.status(404).json({ message: "Resource not found" });
   }
 });
