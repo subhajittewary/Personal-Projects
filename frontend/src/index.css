@@ -67,6 +67,22 @@ a:hover{
   width: 221px;
   height: 176px;
 }
+
+.thumbnail-item {
+  width: 100%;
+  height: 72px;
+}
+
+.thumbnail-container {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding-left: 0;
+}
+.reset-btn {
+  border: none;
+}
 @media (max-width: 900px) {
   .carousel-caption h2 {
     font-size: 2.5vw;

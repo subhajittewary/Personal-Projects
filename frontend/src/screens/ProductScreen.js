@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import swal from "sweetalert";
@@ -20,6 +20,8 @@ const ProductScreen = ({ history, match }) => {
   const [createReview, { isLoading: loadingProductReview }] = useCreateReviewMutation();
   const [qty, setQty] = useState(1);
   const [reviewData, setReviewData] = useState({ rating: 0, comment: "" });
+  const [thumbnailIndex, setThumbnailIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const userLogin = useSelector((state) => state.userSlice.userLogin)
   const { userInfo } = userLogin;
 
@@ -40,6 +42,15 @@ const ProductScreen = ({ history, match }) => {
       err?.data?.message && swal("Error", err.data.message, "error");
     }
   }
+ function handleWindowSizeChange(){
+    setIsMobile(window.innerWidth<768)
+  }
+  useEffect(()=>{
+    window.addEventListener("resize",handleWindowSizeChange)
+    return(()=>{
+      window.removeEventListener("resize",handleWindowSizeChange)
+    })
+  },[])
 
   const { comment, rating } = reviewData;
   return (
@@ -60,8 +71,21 @@ const ProductScreen = ({ history, match }) => {
             <>
               <Row>
                 <Col md={6}>
-                  <Image src={product.image} alt={product.name} fluid />
+                  <Image src={product.images[thumbnailIndex]} alt={product.name} fluid style={{height: "400px"}} />
                 </Col>
+                  {product._id === "61150069583b2a1c504e10bf" && isMobile &&
+                    <Col md={6}>
+
+                      <ul className="thumbnail-container">
+                        {
+                          product?.images.map((image,key) => (
+                            <li><button type="button" className="reset-btn" onClick={e=>setThumbnailIndex(key)}><Image src={image} alt={`thumbnail_${product.name}`} className="thumbnail-item" /></button></li>
+                          ))
+                        }
+                      </ul>
+
+                    </Col>
+                  }
                 <Col md={3}>
                   <ListGroup variant="flush">
                     <ListGroup.Item>
@@ -140,6 +164,19 @@ const ProductScreen = ({ history, match }) => {
                   </Card>
                 </Col>
               </Row>
+                  {product._id === "61150069583b2a1c504e10bf" && !isMobile && <Row className="review" id="review">
+                    <Col md={6}>
+
+                      <ul className="thumbnail-container">
+                        {
+                          product?.images.map((image,key) => (
+                            <li><button type="button" className="reset-btn" onClick={e=>setThumbnailIndex(key)}><Image src={image} alt={`thumbnail_${product.name}`} className="thumbnail-item" /></button></li>
+                          ))
+                        }
+                      </ul>
+
+                    </Col>
+                  </Row>}
               <Row className="review" id="review">
                 <Col md={6}>
                   <h2>Reviews</h2>
