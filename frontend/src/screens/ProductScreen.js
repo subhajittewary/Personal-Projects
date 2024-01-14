@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import swal from "sweetalert";
@@ -78,9 +78,9 @@ const ProductScreen = ({ history, match }) => {
             <>
               <Row>
                 <Col md={6}>
-                  <Image src={product.images[thumbnailIndex]} alt={product.name} fluid style={{ height: "400px" }} />
+                  <Image src={(product?.images?.length > 0 && product.images[thumbnailIndex]) ? product.images[thumbnailIndex] : product.image} alt={product.name} fluid style={{ height: "400px" }} />
                 </Col>
-                {product._id === "61150069583b2a1c504e10bf" && isMobile &&
+                {product.images.length > 0 && isMobile &&
                   renderThumbnailSlider()
                 }
                 <Col md={3}>
@@ -161,7 +161,7 @@ const ProductScreen = ({ history, match }) => {
                   </Card>
                 </Col>
               </Row>
-              {product._id === "61150069583b2a1c504e10bf" && !isMobile && <Row className="review" id="review">
+              {product.images.length > 0 && !isMobile && <Row className="review" id="review">
                 {renderThumbnailSlider()}
               </Row>}
               <Row className="review" id="review">

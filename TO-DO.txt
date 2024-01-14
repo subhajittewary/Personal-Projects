@@ -1,5 +1,5 @@
 TO-DO
 1. Add toast notification
 2. Chat application
-3.Multiple images.
+3.Multiple images. [Configure products with images is left/fix design f0r mobile view]
 4.Add specifications.
