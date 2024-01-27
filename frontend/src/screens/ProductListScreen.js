@@ -75,7 +75,6 @@ const ProductListScreen = ({ history }) => {
 
   const redirectToProductPage = (e) => {
     e.preventDefault();
-    // dispatch(productCreate());
     history.push("/admin/product/create");
   };
   return (

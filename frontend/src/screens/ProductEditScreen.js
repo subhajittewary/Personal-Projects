@@ -10,13 +10,14 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
 import { useCreateProductMutation } from "../services/api/productsApi";
+import swal from "sweetalert";
 
 const ProductEditScreen = ({ history, match }) => {
   const dispatch = useDispatch();
   const { loading, error, product } = useSelector((state) => {
     return state.productDeatils;
   });
-  const [createProduct, { isLoading }] = useCreateProductMutation();
+  const [createProduct, { isSuccess }] = useCreateProductMutation();
   const productUpdateDetails = useSelector((state) => state.productUpdate);
   const userLogin = useSelector((state) => state.userSlice.userLogin);
   const { userInfo } = userLogin;
@@ -26,9 +27,16 @@ const ProductEditScreen = ({ history, match }) => {
     success: successUpdate,
   } = productUpdateDetails;
 
+  useEffect(()=>{
+    if(isSuccess) {
+      swal("success", "Product added", "success")
+     }
+  },[isSuccess])
+
   useEffect(() => {
     if (successUpdate) {
       history.push("/admin/productlist");
+      swal("success", "Product updated successfully", "success");
       dispatch({ type: PRODUCT_UPDATE_RESET });
     }
 
@@ -115,7 +123,7 @@ const ProductEditScreen = ({ history, match }) => {
       <FormContainer>
         <h1>{match.params.id?`Edit`:`Create`} Product</h1>
         {loadingUpdate && <Loader />}
-        {errorUpdate && <Message variant="danger">{errorUpdate}+1</Message>}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Loader />
         ) : error ? (
