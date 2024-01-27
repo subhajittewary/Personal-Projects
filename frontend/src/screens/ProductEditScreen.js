@@ -4,18 +4,19 @@ import { useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { productDeatils, productUpdate } from "../acions/productActions";
+import { productCreate, productDeatils, productUpdate } from "../acions/productActions";
 import FormContainer from "../components/FormContainer";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
+import { useCreateProductMutation } from "../services/api/productsApi";
 
 const ProductEditScreen = ({ history, match }) => {
   const dispatch = useDispatch();
   const { loading, error, product } = useSelector((state) => {
-  console.log("state--->",state)
     return state.productDeatils;
   });
+  const [createProduct, { isLoading }] = useCreateProductMutation();
   const productUpdateDetails = useSelector((state) => state.productUpdate);
   const userLogin = useSelector((state) => state.userSlice.userLogin);
   const { userInfo } = userLogin;
@@ -34,9 +35,9 @@ const ProductEditScreen = ({ history, match }) => {
     if (!userInfo || !userInfo.isAdmin) {
       history.push("/login");
     }
-    if (!product || !product.name || match.params.id !== product._id) {
+    if (match.params.id && (!product || !product?.name || match.params.id !== product?._id)) {
       dispatch(productDeatils(match.params.id));
-    } else {
+    } else if(match.params.id){
       setName(product.name);
       setImage(product.image);
       setPrice(product.price);
@@ -74,26 +75,37 @@ const ProductEditScreen = ({ history, match }) => {
       setImage(data);
       setUploading(false);
     } catch (error) {
-      console.log(error);
       setUploading(false);
     }
   };
 
   const submitHandler = (e) => {
-    console.log("product::",product)
     e.preventDefault();
-    dispatch(
-      productUpdate({
-        id: product._id,
+    if(match.params.id) {
+      dispatch(
+        productUpdate({
+          id: product._id,
+          name,
+          price,
+          category,
+          brand,
+          description,
+          countInStock,
+          image,
+        })
+      );
+    } else {
+      const formData = {
         name,
         price,
         category,
         brand,
         description,
         countInStock,
-        image,
-      })
-    );
+        image
+      }
+    createProduct(formData).unwrap();
+    }
   };
   return (
     <>
@@ -101,7 +113,7 @@ const ProductEditScreen = ({ history, match }) => {
         Go Back
       </Link>
       <FormContainer>
-        <h1>Edit Product</h1>
+        <h1>{match.params.id?`Edit`:`Create`} Product</h1>
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant="danger">{errorUpdate}+1</Message>}
         {loading ? (

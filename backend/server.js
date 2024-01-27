@@ -3,7 +3,6 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import colors from "colors";
-
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 import cors from "cors";
 import productRoutes from "./routes/productRoutes.js";

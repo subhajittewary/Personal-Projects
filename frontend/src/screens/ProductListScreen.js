@@ -3,8 +3,7 @@ import { Button, Col, Row, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteProduct,
-  productCreate,
-  productList,
+  // productList,
 } from "../acions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -23,8 +22,6 @@ const ProductListScreen = ({ history }) => {
   const dispatch = useDispatch();
  
   const {isLoading: loading, error, data: products} = useGetProductListQuery();
-  console.log("products",products)
-
   const { product: createdProduct, success } = useSelector(
     (state) => state.productCreate
   );
@@ -45,6 +42,7 @@ const ProductListScreen = ({ history }) => {
     if (successDeleted) {
       swal("Success!", "You have deleted the product!", "success");
       dispatch({ type: PRODUCT_DELETE_RESET });
+      // dispatch(productList())
     }
   }, [dispatch, success, history, createdProduct, successDeleted]);
   const deleteHandler = (id) => {
@@ -53,9 +51,10 @@ const ProductListScreen = ({ history }) => {
     }
   };
 
-  const createProductHandler = (e) => {
+  const redirectToProductPage = (e) => {
     e.preventDefault();
-    dispatch(productCreate());
+    // dispatch(productCreate());
+    history.push("/admin/product/create");
   };
   return (
     <>
@@ -64,7 +63,7 @@ const ProductListScreen = ({ history }) => {
           <h1>Products</h1>
         </Col>
         <Col className="text-right">
-          <Button className="my-3" onClick={createProductHandler}>
+          <Button className="my-3" onClick={redirectToProductPage}>
             <i className="fas fa-plus">Create Product</i>
           </Button>
         </Col>

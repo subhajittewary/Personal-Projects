@@ -76,15 +76,16 @@ export const updateProductById = asyncHandler(async (req, res) => {
 // @route   POST /api/products/add
 // @access  Private/Admin
 export const createProduct = asyncHandler(async (req, res) => {
+  const {name, image, brand, price, countInStock, description, category} = req.body;
   const product = new Product({
     user: req.user._id,
-    name: "Sample Product",
-    image: "images/camera.jpg",
-    brand: "Sample Brand",
-    price: 0,
-    countInStock: 0,
-    description: "Sample Description",
-    category: "Sample Category",
+    name: name,
+    image: image,
+    brand: brand,
+    price: price,
+    countInStock: countInStock,
+    description: description,
+    category: category,
   });
 
   const createdProduct = await product.save();
@@ -182,9 +183,7 @@ export const updateProductReviews = asyncHandler(async (req, res) => {
       product.numReviews = product.reviews.length;
       const rating = product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length;
       product.rating = rating?rating:0;
-      console.log("first")
       await product.save();
-      // res.json(product)
     })
 
     res.status(201).send({ Message: "Number review updated ." })

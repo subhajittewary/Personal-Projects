@@ -13,7 +13,7 @@ import {
   PRODUCT_DELETE_FAIL,
 } from "../constants/productConstants";
 import axios from "axios";
-// import {  productListSuccess } from "../slices/productSlices";
+import {  productListSuccess } from "../slices/productSlices";
 // export const productList = (product) => async (dispatch) => {
 //     dispatch(productListSuccess(product));
 // };
@@ -73,20 +73,20 @@ export const productUpdate = (product) => async (dispatch, getState) => {
   }
 };
 
-export const productCreate = () => async (dispatch, getState) => {
+export const productCreate = (product) => async (dispatch, getState) => {
   try {
     dispatch({ type: PRODUCT_CREATE_REQUEST });
     const {
-      userLogin: { userInfo },
+      userSlice: { userLogin },
     } = getState();
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLogin.userInfo.token}`,
       },
     };
 
-    const { data } = await axios.post(`/api/products/add`, {}, config);
+    const { data } = await axios.post(`/api/products/add`, product, config);
 
     dispatch({
       type: PRODUCT_CREATE_SUCCESS,
@@ -107,12 +107,12 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: PRODUCT_DELETE_REQUEST });
     const {
-      userLogin: { userInfo },
+      userSlice: { userLogin },
     } = getState();
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLogin.userInfo.token}`,
       },
     };
 

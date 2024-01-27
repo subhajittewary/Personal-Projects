@@ -11,7 +11,7 @@ export const productSlice = apiSlice.injectEndpoints({
       query: (id) => `/products/${id}`
     }),
     getTopProducts: builder.query({
-      query: (id) => `/products/top`
+      query: () => `/products/top`
     }),
     createReview: builder.mutation({
       query:(data)=> ({
@@ -20,8 +20,16 @@ export const productSlice = apiSlice.injectEndpoints({
         method: "POST"
       }),
       invalidatesTags:['product']
+    }),
+    createProduct: builder.mutation({
+      query:(product)=> ({
+        url: `/products/add`,
+        body: product,
+        method: "POST"
+      }),
+      invalidatesTags: [{ type: 'CreateProduct', id: 'Create' }],
     })
   })
 })
 
-export const { useGetProductListQuery, useGetProductDetailsByIdQuery, useGetTopProductsQuery, useCreateReviewMutation } = productSlice
+export const { useGetProductListQuery, useGetProductDetailsByIdQuery, useGetTopProductsQuery, useCreateReviewMutation, useCreateProductMutation } = productSlice
