@@ -46,7 +46,6 @@ export const userSlice = createSlice({
             state.usersList.loading = true;
         },
         usersListSuccess: (state, action) => {
-            console.log("payload", action.payload);
             state.usersList.loading = false;
             state.usersList.users = action.payload;
         },

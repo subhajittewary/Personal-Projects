@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { Button, Col, Row, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteProduct,
-  // productList,
+  deleteProduct
 } from "../acions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -16,19 +15,29 @@ import {
 } from "../constants/productConstants";
 import swal from "sweetalert";
 import { useGetProductListQuery } from "../services/api/productsApi";
+import { useState } from "react";
+import { productListSuccess } from "../slices/productSlices";
 
 
 const ProductListScreen = ({ history }) => {
   const dispatch = useDispatch();
  
-  const {isLoading: loading, error, data: products} = useGetProductListQuery();
+  const {isLoading: loading, error, data: productsFetched} = useGetProductListQuery();
   const { product: createdProduct, success } = useSelector(
     (state) => state.productCreate
+  );
+
+  const { products } = useSelector(
+    (state) => {
+     return  state.productSlice.productList;
+    }
   );
 
   const { success: successDeleted } = useSelector(
     (state) => state.productDelete
   );
+
+  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET });
@@ -37,17 +46,30 @@ const ProductListScreen = ({ history }) => {
     if (success) {
       history.push(`/admin/product/${createdProduct._id}/edit`);
     } else {
-      // dispatch(productList());
+      if(!products?.length>0) 
+      dispatch(productListSuccess(productsFetched));
     }
-    if (successDeleted) {
+  }, [dispatch, success, history, createdProduct, selectedId, productsFetched]);
+  
+  useEffect(()=>{
+    if(!products?.length>0) 
+      dispatch(productListSuccess(productsFetched));
+  },[productsFetched])
+
+  useEffect(() => {
+    if (selectedId && successDeleted) {
       swal("Success!", "You have deleted the product!", "success");
       dispatch({ type: PRODUCT_DELETE_RESET });
-      // dispatch(productList())
+      const filteredProducts = products.filter((product) => product._id !== selectedId);
+      dispatch(productListSuccess(filteredProducts));
+      setSelectedId(null);
     }
-  }, [dispatch, success, history, createdProduct, successDeleted]);
+  }, [dispatch, selectedId, successDeleted]);
+
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure")) {
       dispatch(deleteProduct(id));
+      setSelectedId(id);
     }
   };
 

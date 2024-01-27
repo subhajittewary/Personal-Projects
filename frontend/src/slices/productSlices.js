@@ -12,11 +12,15 @@ export const productSlice = createSlice({
         productListFail:(state,action)=>{
             state.productList.loading= false;
             state.productList.error= action.payload; 
+        },
+        productListSuccess:(state,action)=>{
+            state.productList.loading= false;
+            state.productList.products= action.payload; 
         }
     }
 })
 
 // Action creators are generated for each case reducer function
-export const { productListReq,productListFail } = productSlice.actions;
+export const { productListReq,productListFail,productListSuccess } = productSlice.actions;
 
 export default productSlice.reducer;
